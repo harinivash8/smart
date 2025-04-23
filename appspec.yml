@@ -1,19 +1,10 @@
 version: 0.0
 os: linux
 files:
-  - source: /
-    destination: /home/ec2-user/my-app
-
+  - source: /  
+    destination: /home/ec2-user/app  
 hooks:
-  BeforeInstall:
-    - location: scripts/install_docker.sh
-      timeout: 300
-      runas: ec2-user
-  ApplicationStart:
-    - location: scripts/start_app.sh
-      timeout: 300
-      runas: ec2-user
-  ApplicationStop:
-    - location: scripts/stop_app.sh
+  AfterInstall:
+    - location: scripts/deploy.sh
       timeout: 300
       runas: ec2-user
