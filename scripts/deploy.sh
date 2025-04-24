@@ -1,13 +1,15 @@
 #!/bin/bash
-sudo usermod -aG docker ec2-user
-# Stop and remove existing container
-docker stop my_app || true
-docker rm my_app || true
 
-# Remove old image (optional)
-docker rmi my_app_image || true
+# Stop and clean up previous container/image
+sudo docker stop my_app || true
+sudo docker rm my_app || true
+sudo docker rmi my_app_image || true
 
-# Build and run the container
-cd /home/ec2-user/app
-docker build -t my_app_image .
-docker run -d -p 80:80 --name my_app my_app_image
+# Build the Java app (create the fat jar)
+mvn clean package
+
+# Build the Docker image
+sudo docker build -t my_app_image .
+
+# Run the container
+sudo docker run -d --name my_app -p 8080:8080 my_app_image
