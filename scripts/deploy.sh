@@ -1,5 +1,5 @@
 #!/bin/bash
-
+sudo usermod -aG docker ec2-user
 # Stop and remove existing container
 docker stop my_app || true
 docker rm my_app || true
